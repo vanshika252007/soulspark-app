@@ -1,36 +1,50 @@
- ✨ SoulSpark – Inspiration App
+# ✨ SoulSpark – Inspiration App
 
-📌 Project Overview
+## 📌 Project Overview
 
 SoulSpark is a simple web application that shows users a random motivational quote to help start their day on a positive note. The idea behind this project is to create a calm and clean interface where users can quickly get a bit of inspiration whenever they need it.
 
-🎯 Objective
+## 🎯 Objective
 
 The main aim of this project is to practice core web development concepts like JavaScript, working with APIs, and designing a user-friendly interface, while building something that is actually useful and meaningful.
 
- 🌐 API Used
+## 🌐 API Used
 
 * Type.fit Quotes API: https://type.fit/api/quotes
 
-This API provides a collection of quotes, which will be used to display random quotes along with their authors in the application.
+This API is used to fetch and display random quotes dynamically in the application.
 
-✨ Features
+## ✨ Features
 
 * Shows random motivational quotes
 * Displays the name of the author
 * Button to generate a new quote
 * Simple and responsive design that works on different devices
 
-🚀 Planned Enhancements
+## 🚀 Planned Enhancements
 
 * Ability to save favorite quotes using localStorage
 * Dark mode for better viewing experience
 * Option to search for specific quotes
+* Implement search and filtering of quotes
 
-🛠️ Technologies Used
+## 🛠️ Technologies Used
 
 * HTML
 * CSS
 * JavaScript (Fetch API)
+
+## ⚙️ Setup Instructions
+
+1. Clone or download the repository
+2. Open the `index.html` file in your browser
+
+## 📅 Milestone Status
+
+* Milestone 1: Completed
+* Milestone 2: In Progress
+* Milestone 3: Pending
+* Milestone 4: Pending
+
 
 
