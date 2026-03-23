@@ -34,17 +34,6 @@ This API is used to fetch and display random quotes dynamically in the applicati
 * CSS
 * JavaScript (Fetch API)
 
-## ⚙️ Setup Instructions
-
-1. Clone or download the repository
-2. Open the `index.html` file in your browser
-
-## 📅 Milestone Status
-
-* Milestone 1: Completed
-* Milestone 2: In Progress
-* Milestone 3: Pending
-* Milestone 4: Pending
 
 
 
