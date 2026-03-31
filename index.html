@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SoulSpark ✨</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Stars Background -->
+  <div class="stars" id="stars"></div>
+  <div class="stars2" id="stars2"></div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-logo">✦ SoulSpark</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#explore">Explore</a></li>
+      <li><a href="#favorites">Favorites</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">☽</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="moon"></div>
+    <div class="cherry-blossoms">
+      <span class="petal p1">🌸</span>
+      <span class="petal p2">🌸</span>
+      <span class="petal p3">🌸</span>
+      <span class="petal p4">🌸</span>
+      <span class="petal p5">🌸</span>
+    </div>
+    <div class="hero-content">
+      <p class="hero-tagline">Drink in the Wisdom of</p>
+      <h1 class="hero-title">Your Soul's Daily Spark</h1>
+      <p class="hero-sub">Curated wisdom to illuminate your path, one quote at a time.</p>
+      <button class="btn-primary" id="exploreBtn">Explore Quotes ↓</button>
+    </div>
+  </section>
+
+  <!-- LOADING -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-orb"></div>
+    <p class="loading-text">Gathering cosmic wisdom…</p>
+  </div>
+
+  <!-- DAILY QUOTE -->
+  <section class="daily-quote-section" id="explore">
+    <div class="section-label">✦ Today's Spark</div>
+    <div class="quote-card featured" id="featuredQuote">
+      <div class="quote-inner">
+        <div class="quote-icon">"</div>
+        <p class="quote-text" id="featuredText">Loading your daily wisdom...</p>
+        <p class="quote-author" id="featuredAuthor">— ✦</p>
+        <div class="quote-actions">
+          <button class="btn-outline" id="newQuoteBtn">New Spark ✦</button>
+          <button class="btn-fav" id="favFeaturedBtn" title="Save to favorites">♡ Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH & FILTER -->
+  <section class="controls-section">
+    <div class="section-label">✦ Explore All Quotes</div>
+    <div class="controls">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search quotes or authors..." />
+      </div>
+      <div class="filter-row">
+        <select id="authorFilter" class="filter-select">
+          <option value="">All Authors</option>
+        </select>
+        <select id="sortSelect" class="filter-select">
+          <option value="default">Sort: Default</option>
+          <option value="az">Author A–Z</option>
+          <option value="za">Author Z–A</option>
+          <option value="shortest">Shortest First</option>
+          <option value="longest">Longest First</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTES GRID -->
+  <section class="quotes-grid-section" id="quotesSection">
+    <div class="quotes-grid" id="quotesGrid">
+      <!-- Populated by JS -->
+    </div>
+    <div class="no-results hidden" id="noResults">
+      <p>✦ No quotes found. Try a different search.</p>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+
+  <!-- FAVORITES -->
+  <section class="favorites-section" id="favorites">
+    <div class="section-label">✦ Your Saved Sparks</div>
+    <div class="fav-empty hidden" id="favEmpty">
+      <p>Your cosmic collection is empty. Save quotes you love! ♡</p>
+    </div>
+    <div class="quotes-grid" id="favGrid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-brand">✦ SoulSpark</p>
+    <p class="footer-sub">Powered by type.fit Quotes API · Built with ♡</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
