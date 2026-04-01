@@ -1,5 +1,5 @@
 // dummyjson API (no CORS issues)
-const API_URL = "https://dummyjson.com/quotes?limit=0";
+const API_URL = "https://dummyjson.com/quotes";
 
 // elements
 const loading = document.getElementById("loading");
