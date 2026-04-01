@@ -10,7 +10,7 @@ The main aim of this project is to practice core web development concepts like J
 
 ## 🌐 API Used
 
-* Type.fit Quotes API: https://type.fit/api/quotes
+* DummyJSON Quotes API: https://dummyjson.com/quotes
 
 This API is used to fetch and display random quotes dynamically in the application.
 
