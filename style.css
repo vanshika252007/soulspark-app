@@ -26,8 +26,10 @@ nav {
 
 nav h2 {
   font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+  color: #c9a96e;
+  letter-spacing: 0.05em;
 }
-
 nav ul {
   list-style: none;
   display: flex;
