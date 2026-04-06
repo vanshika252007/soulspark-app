@@ -79,17 +79,19 @@ header h1 {
 }
 
 button {
-  background-color: #5a2d82;
-  color: white;
-  border: none;
-  padding: 10px 22px;
-  font-size: 0.9rem;
-  border-radius: 5px;
+  background-color: transparent;
+  color: #c9a96e;
+  border: 1px solid #c9a96e;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  border-radius: 3px;
   cursor: pointer;
+  letter-spacing: 0.08em;
+  transition: all 0.3s;
 }
-
 button:hover {
-  background-color: #3e1a60;
+  background-color: #c9a96e;
+  color: #0d0d1a;
 }
 
 /* ---- featured quote ---- */
