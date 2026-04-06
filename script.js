@@ -21,6 +21,30 @@ function showRandomQuote() {
   quoteAuthor.textContent = `— ${q.author}`;
 }
 
+
+// renders all quote cards into the grid
+function renderQuotes() {
+  const grid = document.getElementById("quotesGrid");
+  const count = document.getElementById("totalCount");
+  if (!grid) return;
+  grid.innerHTML = "";
+  for (let i = 0; i < allQuotes.length; i++) {
+    const q = allQuotes[i];
+    const card = document.createElement("div");
+    card.className = "card";
+    const t = document.createElement("p");
+    t.className = "text";
+    t.textContent = '"' + q.quote + '"';
+    const a = document.createElement("p");
+    a.className = "author";
+    a.textContent = "— " + q.author;
+    card.appendChild(t);
+    card.appendChild(a);
+    grid.appendChild(card);
+  }
+  if (count) count.textContent = allQuotes.length + " quotes loaded";
+}
+
 // fetch quotes
 async function fetchQuotes() {
   try {
@@ -41,6 +65,8 @@ async function fetchQuotes() {
 
     // first quote
     showRandomQuote();
+
+    renderQuotes();
 
   } catch (err) {
     console.log("error:", err);
