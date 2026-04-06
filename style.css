@@ -115,17 +115,18 @@ button:hover {
 }
 
 #quoteText {
-  font-size: 1.05rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
   font-style: italic;
-  line-height: 1.65;
-  margin-bottom: 12px;
-  color: #222;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  color: #f0eaff;
 }
-
 #quoteAuthor {
-  font-size: 0.85rem;
-  color: #5a2d82;
-  font-weight: bold;
+  font-size: 0.82rem;
+  color: #c9a96e;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
 /* ---- all quotes section ---- */
