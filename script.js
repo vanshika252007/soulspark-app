@@ -1,116 +1,138 @@
-const featuredText = document.getElementById("featuredText");
-const featuredAuthor = document.getElementById("featuredAuthor");
-const newQuoteBtn = document.getElementById("newQuoteBtn");
-const favBtn = document.getElementById("favBtn");
-const favGrid = document.getElementById("favGrid");
-const favEmpty = document.getElementById("favEmpty");
-const exploreBtn = document.getElementById("exploreBtn");
+// dummyjson API - has CORS, no key needed
+const API_URL = "https://dummyjson.com/quotes?limit=0";
+
+// elements
 const loadingOverlay = document.getElementById("loadingOverlay");
+const featuredText   = document.getElementById("featuredText");
+const featuredAuthor = document.getElementById("featuredAuthor");
+const newQuoteBtn    = document.getElementById("newQuoteBtn");
+const favBtn         = document.getElementById("favBtn");
+const favGrid        = document.getElementById("favGrid");
+const favEmpty       = document.getElementById("favEmpty");
+const exploreBtn     = document.getElementById("exploreBtn");
 
+let allQuotes    = [];
 let currentQuote = null;
-let favorites = JSON.parse(localStorage.getItem("soulspark_favs")) || [];
+let favorites    = JSON.parse(localStorage.getItem("soulspark_favs") || "[]");
 
-// FIXED API FUNCTION
-async function fetchQuote() {
-try {
-const res = await fetch("https://dummyjson.com/quotes");
-const data = await res.json();
+// show a random quote with fade effect
+function showRandom() {
+  if (allQuotes.length === 0) return;
 
-```
-// pick random quote
-const random = data.quotes[Math.floor(Math.random() * data.quotes.length)];
+  const index = Math.floor(Math.random() * allQuotes.length);
+  currentQuote = allQuotes[index];
 
-currentQuote = {
-  text: random.quote,
-  author: random.author
-};
+  featuredText.style.opacity = "0";
+  setTimeout(function() {
+    featuredText.textContent = '"' + currentQuote.quote + '"';
+    featuredAuthor.textContent = "— " + currentQuote.author;
+    featuredText.style.opacity = "1";
+    featuredText.style.transition = "opacity 0.5s";
+  }, 200);
 
-updateUI();
-loadingOverlay.classList.add("hidden");
-```
-
-} catch (err) {
-console.log(err);
-loadingOverlay.classList.add("hidden");
-featuredText.innerText = "Failed to load quote.";
-}
+  const isFaved = favorites.some(function(f) {
+    return f.quote === currentQuote.quote;
+  });
+  favBtn.textContent = isFaved ? "♥ Saved" : "♡ Save";
+  isFaved ? favBtn.classList.add("saved") : favBtn.classList.remove("saved");
 }
 
-function updateUI() {
-featuredText.style.opacity = 0;
-
-setTimeout(() => {
-featuredText.innerText = `"${currentQuote.text}"`;
-featuredAuthor.innerText = "— " + currentQuote.author;
-featuredText.style.opacity = 1;
-}, 200);
-
-checkFav();
-}
-
-function checkFav() {
-const exists = favorites.some(f => f.text === currentQuote.text);
-
-favBtn.innerText = exists ? "♥ Saved" : "♡ Save";
-favBtn.classList.toggle("saved", exists);
-}
-
-newQuoteBtn.onclick = fetchQuote;
-
-favBtn.onclick = () => {
-if (!currentQuote) return;
-
-const exists = favorites.some(f => f.text === currentQuote.text);
-
-if (exists) {
-favorites = favorites.filter(f => f.text !== currentQuote.text);
-} else {
-favorites.push(currentQuote);
-}
-
-localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
-renderFavs();
-checkFav();
-};
-
+// render saved favorites into the grid
 function renderFavs() {
-favGrid.innerHTML = "";
+  favGrid.innerHTML = "";
 
-if (favorites.length === 0) {
-favEmpty.classList.remove("hidden");
-return;
+  if (favorites.length === 0) {
+    favEmpty.classList.remove("hidden");
+    return;
+  }
+
+  favEmpty.classList.add("hidden");
+
+  favorites.forEach(function(q, i) {
+    const card = document.createElement("div");
+    card.className = "fav-card";
+    card.style.animationDelay = i * 0.05 + "s";
+
+    const text = document.createElement("p");
+    text.className = "fav-card-text";
+    text.textContent = '"' + q.quote + '"';
+
+    const author = document.createElement("p");
+    author.className = "fav-card-author";
+    author.textContent = "— " + q.author;
+
+    const rb = document.createElement("button");
+    rb.className = "fav-remove";
+    rb.textContent = "♥";
+
+    rb.addEventListener("click", function() {
+      favorites = favorites.filter(function(f) {
+        return f.quote !== q.quote;
+      });
+      localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
+      renderFavs();
+      if (currentQuote && currentQuote.quote === q.quote) {
+        favBtn.textContent = "♡ Save";
+        favBtn.classList.remove("saved");
+      }
+    });
+
+    card.appendChild(text);
+    card.appendChild(author);
+    card.appendChild(rb);
+    favGrid.appendChild(card);
+  });
 }
 
-favEmpty.classList.add("hidden");
+// fetch all quotes from API
+async function fetchQuotes() {
+  try {
+    const response = await fetch(API_URL);
 
-favorites.forEach((q, i) => {
-const card = document.createElement("div");
-card.className = "fav-card";
+    if (!response.ok) {
+      throw new Error("API error: " + response.status);
+    }
 
-```
-card.innerHTML = `
-  <p class="fav-card-text">"${q.text}"</p>
-  <p class="fav-card-author">— ${q.author}</p>
-  <button class="fav-remove">✕</button>
-`;
+    const data = await response.json();
+    allQuotes = data.quotes;
+    console.log("quotes loaded:", allQuotes.length);
 
-card.querySelector(".fav-remove").onclick = () => {
-  favorites.splice(i, 1);
+    loadingOverlay.classList.add("hidden");
+
+    showRandom();
+    renderFavs();
+
+  } catch (err) {
+    console.log("error:", err);
+    loadingOverlay.innerHTML = "<p style='color:#9a8fb0;font-style:italic;padding:2rem;'>Could not load quotes. Please refresh.</p>";
+  }
+}
+
+// new quote button
+newQuoteBtn.addEventListener("click", showRandom);
+
+// save or unsave current quote
+favBtn.addEventListener("click", function() {
+  if (!currentQuote) return;
+
+  if (favorites.some(function(f) { return f.quote === currentQuote.quote; })) {
+    favorites = favorites.filter(function(f) { return f.quote !== currentQuote.quote; });
+    favBtn.textContent = "♡ Save";
+    favBtn.classList.remove("saved");
+  } else {
+    favorites.push(currentQuote);
+    favBtn.textContent = "♥ Saved";
+    favBtn.classList.add("saved");
+  }
+
   localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
   renderFavs();
-};
-
-favGrid.appendChild(card);
-```
-
 });
-}
 
-exploreBtn.onclick = () => {
-document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
-};
+// scroll down to featured section
+exploreBtn.addEventListener("click", function() {
+  document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
+});
 
-// init
-fetchQuote();
-renderFavs();
-
+// start
+fetchQuotes();
