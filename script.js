@@ -1,5 +1,5 @@
 // dummyjson API - has CORS, no key needed
-const API_URL = "https://dummyjson.com/quotes?limit=0";
+const API_URL = "https://corsproxy.io/?https://dummyjson.com/quotes?limit=0";
 
 // elements - updated to match new HTML ids
 const loadingOverlay = document.getElementById("loadingOverlay");
