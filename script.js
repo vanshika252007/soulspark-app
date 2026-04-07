@@ -11,11 +11,11 @@ const favGrid        = document.getElementById("favGrid");
 const favEmpty       = document.getElementById("favEmpty");
 const exploreBtn     = document.getElementById("exploreBtn");
 
-let allQuotes    = [];
+let allQuotes = [];
 let currentQuote = null;
-let favorites    = JSON.parse(localStorage.getItem("soulspark_favs") || "[]");
+let favorites = JSON.parse(localStorage.getItem("soulspark_favs") || "[]");
 
-// 🔥 keep button state always correct
+// keep button state correct
 function updateFavButton() {
 if (!currentQuote) return;
 
@@ -25,7 +25,7 @@ favBtn.textContent = isFaved ? "♥ Saved" : "♡ Save";
 favBtn.classList.toggle("saved", isFaved);
 }
 
-// show random quote with animation
+// show random quote
 function showRandom() {
 if (allQuotes.length === 0) return;
 
@@ -61,7 +61,6 @@ favEmpty.classList.add("hidden");
 favorites.forEach((q, i) => {
 const card = document.createElement("div");
 card.className = "fav-card";
-card.style.animationDelay = i * 0.05 + "s";
 
 ```
 const text = document.createElement("p");
@@ -115,7 +114,8 @@ renderFavs();
 
 } catch (err) {
 console.log("error:", err);
-loadingOverlay.innerHTML = "<p style='color:#9a8fb0;font-style:italic;padding:2rem;'>Could not load quotes. Please refresh.</p>";
+loadingOverlay.innerHTML =
+"<p style='color:#9a8fb0;font-style:italic;padding:2rem;'>Could not load quotes. Please refresh.</p>";
 }
 }
 
@@ -142,3 +142,4 @@ document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
 
 // init
 fetchQuotes();
+
