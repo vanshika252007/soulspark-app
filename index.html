@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SoulSpark ✨</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- CLEAN FONT SET -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- star divs -->
   <div class="stars"></div>
   <div class="stars2"></div>
 
@@ -23,9 +24,9 @@
     </ul>
   </nav>
 
-  <!--  hero section with moon and petals -->
   <section class="hero">
     <div class="moon"></div>
+
     <div class="petals">
       <span class="petal p1">🌸</span>
       <span class="petal p2">🌸</span>
@@ -33,44 +34,64 @@
       <span class="petal p4">🌸</span>
       <span class="petal p5">🌸</span>
     </div>
+
     <div class="hero-content">
-      <p class="hero-tagline">Drink in the Wisdom of</p>
-      <h1 class="hero-title">Your Soul's Daily Spark</h1>
-      <p class="hero-sub">Curated wisdom to illuminate your path, one quote at a time.</p>
-      <button class="btn-primary" id="exploreBtn">Explore Quotes ↓</button>
+      <p class="hero-tagline">DRINK IN THE WISDOM OF</p>
+      
+      <h1 class="hero-title">
+        Your Soul's Daily Spark
+      </h1>
+
+      <p class="hero-sub">
+        Curated wisdom to illuminate your path, one quote at a time.
+      </p>
+
+      <button class="btn-primary" id="exploreBtn">
+        EXPLORE QUOTES ↓
+      </button>
     </div>
   </section>
 
-  <!--  loading overlay -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-orb"></div>
     <p class="loading-text">Gathering cosmic wisdom…</p>
   </div>
 
-  <!-- updated featured section -->
   <section class="featured-section" id="explore">
-    <div class="section-label">✦ Today's Spark</div>
+    <div class="section-label">✦ TODAY'S SPARK</div>
+
     <div class="featured-card">
       <div class="quote-icon">"</div>
-      <p class="featured-text" id="featuredText">Loading your daily wisdom...</p>
-      <p class="featured-author" id="featuredAuthor">— ✦</p>
+
+      <p class="featured-text" id="featuredText">
+        Loading your daily wisdom...
+      </p>
+
+      <p class="featured-author" id="featuredAuthor">
+        — ✦
+      </p>
+
       <div class="card-actions">
-        <button class="btn-outline" id="newQuoteBtn">New Spark ✦</button>
-        <button class="btn-fav" id="favBtn">♡ Save</button>
+        <button class="btn-outline" id="newQuoteBtn">
+          NEW SPARK ✦
+        </button>
+        <button class="btn-fav" id="favBtn">
+          ♡ SAVE
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- favorites section -->
   <section class="fav-section" id="favorites">
-    <div class="section-label">✦ Your Saved Sparks</div>
+    <div class="section-label">✦ YOUR SAVED SPARKS</div>
+
     <div class="fav-empty" id="favEmpty">
       <p>Your cosmic collection is empty. Save quotes you love! ♡</p>
     </div>
+
     <div class="fav-grid" id="favGrid"></div>
   </section>
 
-  <!-- proper footer -->
   <footer class="footer">
     <p class="footer-brand">✦ SoulSpark</p>
     <p class="footer-sub">Powered by DummyJSON Quotes API · Built with ♡</p>
