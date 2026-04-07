@@ -52,11 +52,11 @@ function renderFavs() {
   favGrid.innerHTML = "";
 
   if (favorites.length === 0) {
-    favEmpty.classList.remove("hidden");
+    favEmpty.style.display = "block";   // ✅ FORCE SHOW
     return;
   }
 
-  favEmpty.classList.add("hidden");
+  favEmpty.style.display = "none";      // ✅ FORCE HIDE
 
   favorites.forEach((q, i) => {
     const card = document.createElement("div");
