@@ -93,11 +93,11 @@ function renderFavs() {
 // ✅ fetch quotes
 async function fetchQuotes() {
   try {
-    const res = await fetch(API_URL);
+    const response = await fetch(API_URL);
 
-    if (!res.ok) throw new Error("API error");
+    // ✅ IMPORTANT FIX
+    const data = await response.json();
 
-    const data = await res.json();
     allQuotes = data.quotes;
 
     loadingOverlay.classList.add("hidden");
@@ -106,9 +106,9 @@ async function fetchQuotes() {
     renderFavs();
 
   } catch (err) {
-    console.log(err);
+    console.log("error:", err);
     loadingOverlay.innerHTML =
-      "<p style='color:#9a8fb0;padding:2rem;'>Failed to load quotes. Refresh.</p>";
+      "<p style='color:#9a8fb0;padding:2rem;'>Could not load quotes. Please refresh.</p>";
   }
 }
 
