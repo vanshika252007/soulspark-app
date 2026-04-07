@@ -246,6 +246,24 @@ nav ul a:hover {
   gap: 1.5rem;
 }
 
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0a0c1a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+  z-index: 999;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ---- FOOTER ---- */
 .footer {
   text-align: center;
