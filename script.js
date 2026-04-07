@@ -10,97 +10,107 @@ const loadingOverlay = document.getElementById("loadingOverlay");
 let currentQuote = null;
 let favorites = JSON.parse(localStorage.getItem("soulspark_favs")) || [];
 
-// fetch from CLEAN API
+// FIXED API FUNCTION
 async function fetchQuote() {
-  try {
-    const res = await fetch("https://dummyjson.com/quotes");
-    const data = await res.json();
+try {
+const res = await fetch("https://dummyjson.com/quotes");
+const data = await res.json();
 
-    currentQuote = {
-      text: data.content,
-      author: data.author
-    };
+```
+// pick random quote
+const random = data.quotes[Math.floor(Math.random() * data.quotes.length)];
 
-    updateUI();
-    loadingOverlay.classList.add("hidden");
+currentQuote = {
+  text: random.quote,
+  author: random.author
+};
 
-  } catch (err) {
-    loadingOverlay.classList.add("hidden");
-    featuredText.innerText = "Failed to load quote.";
-  }
+updateUI();
+loadingOverlay.classList.add("hidden");
+```
+
+} catch (err) {
+console.log(err);
+loadingOverlay.classList.add("hidden");
+featuredText.innerText = "Failed to load quote.";
+}
 }
 
 function updateUI() {
-  featuredText.style.opacity = 0;
+featuredText.style.opacity = 0;
 
-  setTimeout(() => {
-    featuredText.innerText = `"${currentQuote.text}"`;
-    featuredAuthor.innerText = "— " + currentQuote.author;
-    featuredText.style.opacity = 1;
-  }, 200);
+setTimeout(() => {
+featuredText.innerText = `"${currentQuote.text}"`;
+featuredAuthor.innerText = "— " + currentQuote.author;
+featuredText.style.opacity = 1;
+}, 200);
 
-  checkFav();
+checkFav();
 }
 
 function checkFav() {
-  const exists = favorites.some(f => f.text === currentQuote.text);
+const exists = favorites.some(f => f.text === currentQuote.text);
 
-  favBtn.innerText = exists ? "♥ Saved" : "♡ Save";
-  favBtn.classList.toggle("saved", exists);
+favBtn.innerText = exists ? "♥ Saved" : "♡ Save";
+favBtn.classList.toggle("saved", exists);
 }
 
 newQuoteBtn.onclick = fetchQuote;
 
 favBtn.onclick = () => {
-  if (!currentQuote) return;
+if (!currentQuote) return;
 
-  const exists = favorites.some(f => f.text === currentQuote.text);
+const exists = favorites.some(f => f.text === currentQuote.text);
 
-  if (exists) {
-    favorites = favorites.filter(f => f.text !== currentQuote.text);
-  } else {
-    favorites.push(currentQuote);
-  }
+if (exists) {
+favorites = favorites.filter(f => f.text !== currentQuote.text);
+} else {
+favorites.push(currentQuote);
+}
 
-  localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
-  renderFavs();
-  checkFav();
+localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
+renderFavs();
+checkFav();
 };
 
 function renderFavs() {
-  favGrid.innerHTML = "";
+favGrid.innerHTML = "";
 
-  if (favorites.length === 0) {
-    favEmpty.classList.remove("hidden");
-    return;
-  }
+if (favorites.length === 0) {
+favEmpty.classList.remove("hidden");
+return;
+}
 
-  favEmpty.classList.add("hidden");
+favEmpty.classList.add("hidden");
 
-  favorites.forEach((q, i) => {
-    const card = document.createElement("div");
-    card.className = "fav-card";
+favorites.forEach((q, i) => {
+const card = document.createElement("div");
+card.className = "fav-card";
 
-    card.innerHTML = `
-      <p class="fav-card-text">"${q.text}"</p>
-      <p class="fav-card-author">— ${q.author}</p>
-      <button class="fav-remove">✕</button>
-    `;
+```
+card.innerHTML = `
+  <p class="fav-card-text">"${q.text}"</p>
+  <p class="fav-card-author">— ${q.author}</p>
+  <button class="fav-remove">✕</button>
+`;
 
-    card.querySelector(".fav-remove").onclick = () => {
-      favorites.splice(i, 1);
-      localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
-      renderFavs();
-    };
+card.querySelector(".fav-remove").onclick = () => {
+  favorites.splice(i, 1);
+  localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
+  renderFavs();
+};
 
-    favGrid.appendChild(card);
-  });
+favGrid.appendChild(card);
+```
+
+});
 }
 
 exploreBtn.onclick = () => {
-  document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
+document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
 };
 
 // init
 fetchQuote();
 renderFavs();
+
