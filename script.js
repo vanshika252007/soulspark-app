@@ -13,7 +13,7 @@ let favorites = JSON.parse(localStorage.getItem("soulspark_favs")) || [];
 // fetch from CLEAN API
 async function fetchQuote() {
   try {
-    const res = await fetch("https://api.quotable.io/random");
+    const res = await fetch("https://dummyjson.com/quotes");
     const data = await res.json();
 
     currentQuote = {
