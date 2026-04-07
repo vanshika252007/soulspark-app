@@ -1,4 +1,4 @@
-// dummyjson API (stable)
+// API (FIXED)
 const API_URL = "https://dummyjson.com/quotes?limit=100";
 
 // elements
@@ -15,131 +15,126 @@ let allQuotes = [];
 let currentQuote = null;
 let favorites = JSON.parse(localStorage.getItem("soulspark_favs") || "[]");
 
-// keep button state correct
+
+// ✅ update save button
 function updateFavButton() {
-if (!currentQuote) return;
+  if (!currentQuote) return;
 
-const isFaved = favorites.some(f => f.quote === currentQuote.quote);
+  const isFaved = favorites.some(f => f.quote === currentQuote.quote);
 
-favBtn.textContent = isFaved ? "♥ Saved" : "♡ Save";
-favBtn.classList.toggle("saved", isFaved);
+  favBtn.textContent = isFaved ? "♥ Saved" : "♡ Save";
+  favBtn.classList.toggle("saved", isFaved);
 }
 
-// show random quote
+
+// ✅ show random quote
 function showRandom() {
-if (allQuotes.length === 0) return;
+  if (allQuotes.length === 0) return;
 
-const index = Math.floor(Math.random() * allQuotes.length);
-currentQuote = allQuotes[index];
+  const index = Math.floor(Math.random() * allQuotes.length);
+  currentQuote = allQuotes[index];
 
-featuredText.style.opacity = "0";
+  featuredText.style.opacity = "0";
 
-setTimeout(() => {
-featuredText.textContent = '"' + currentQuote.quote + '"';
-featuredAuthor.textContent = "— " + currentQuote.author;
-featuredText.style.opacity = "1";
-featuredText.style.transition = "opacity 0.5s";
+  setTimeout(() => {
+    featuredText.textContent = `"${currentQuote.quote}"`;
+    featuredAuthor.textContent = `— ${currentQuote.author}`;
+    featuredText.style.opacity = "1";
+    featuredText.style.transition = "opacity 0.5s";
 
-```
-updateFavButton();
-```
-
-}, 200);
+    updateFavButton();
+  }, 200);
 }
 
-// render favorites
+
+// ✅ render favorites
 function renderFavs() {
-favGrid.innerHTML = "";
+  favGrid.innerHTML = "";
 
-if (favorites.length === 0) {
-favEmpty.classList.remove("hidden");
-return;
+  if (favorites.length === 0) {
+    favEmpty.classList.remove("hidden");
+    return;
+  }
+
+  favEmpty.classList.add("hidden");
+
+  favorites.forEach((q, i) => {
+    const card = document.createElement("div");
+    card.className = "fav-card";
+    card.style.animationDelay = i * 0.05 + "s";
+
+    const text = document.createElement("p");
+    text.className = "fav-card-text";
+    text.textContent = `"${q.quote}"`;
+
+    const author = document.createElement("p");
+    author.className = "fav-card-author";
+    author.textContent = `— ${q.author}`;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.className = "fav-remove";
+    removeBtn.textContent = "✕";
+
+    removeBtn.addEventListener("click", () => {
+      favorites = favorites.filter(f => f.quote !== q.quote);
+      localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
+      renderFavs();
+      updateFavButton();
+    });
+
+    card.appendChild(text);
+    card.appendChild(author);
+    card.appendChild(removeBtn);
+    favGrid.appendChild(card);
+  });
 }
 
-favEmpty.classList.add("hidden");
 
-favorites.forEach((q, i) => {
-const card = document.createElement("div");
-card.className = "fav-card";
-
-```
-const text = document.createElement("p");
-text.className = "fav-card-text";
-text.textContent = '"' + q.quote + '"';
-
-const author = document.createElement("p");
-author.className = "fav-card-author";
-author.textContent = "— " + q.author;
-
-const removeBtn = document.createElement("button");
-removeBtn.className = "fav-remove";
-removeBtn.textContent = "✕";
-
-removeBtn.addEventListener("click", () => {
-  favorites = favorites.filter(f => f.quote !== q.quote);
-  localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
-  renderFavs();
-  updateFavButton();
-});
-
-card.appendChild(text);
-card.appendChild(author);
-card.appendChild(removeBtn);
-favGrid.appendChild(card);
-```
-
-});
-}
-
-// fetch quotes
+// ✅ fetch quotes
 async function fetchQuotes() {
-try {
-const res = await fetch(API_URL);
+  try {
+    const res = await fetch(API_URL);
 
-```
-if (!res.ok) {
-  throw new Error("API error: " + res.status);
+    if (!res.ok) throw new Error("API error");
+
+    const data = await res.json();
+    allQuotes = data.quotes;
+
+    loadingOverlay.classList.add("hidden");
+
+    showRandom();
+    renderFavs();
+
+  } catch (err) {
+    console.log(err);
+    loadingOverlay.innerHTML =
+      "<p style='color:#9a8fb0;padding:2rem;'>Failed to load quotes. Refresh.</p>";
+  }
 }
 
-const data = await res.json();
-allQuotes = data.quotes;
 
-console.log("quotes loaded:", allQuotes.length);
-
-loadingOverlay.classList.add("hidden");
-
-showRandom();
-renderFavs();
-```
-
-} catch (err) {
-console.log("error:", err);
-loadingOverlay.innerHTML =
-"<p style='color:#9a8fb0;font-style:italic;padding:2rem;'>Could not load quotes. Please refresh.</p>";
-}
-}
-
-// events
+// ✅ events
 newQuoteBtn.addEventListener("click", showRandom);
 
 favBtn.addEventListener("click", () => {
-if (!currentQuote) return;
+  if (!currentQuote) return;
 
-if (favorites.some(f => f.quote === currentQuote.quote)) {
-favorites = favorites.filter(f => f.quote !== currentQuote.quote);
-} else {
-favorites.push(currentQuote);
-}
+  if (favorites.some(f => f.quote === currentQuote.quote)) {
+    favorites = favorites.filter(f => f.quote !== currentQuote.quote);
+  } else {
+    favorites.push(currentQuote);
+  }
 
-localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
-updateFavButton();
-renderFavs();
+  localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
+
+  updateFavButton();
+  renderFavs();
 });
 
 exploreBtn.addEventListener("click", () => {
-document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
 });
 
-// init
-fetchQuotes();
 
+// ✅ init
+fetchQuotes();
