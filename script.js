@@ -1,7 +1,11 @@
-// API (FIXED)
+// ============================================================
+// SoulSpark — script.js
+// Milestone 3: Search (.filter), Sort (.sort), Dark Mode Toggle
+// ============================================================
+
 const API_URL = "https://dummyjson.com/quotes?limit=100";
 
-// elements
+// --- Elements ---
 const loadingOverlay = document.getElementById("loadingOverlay");
 const featuredText   = document.getElementById("featuredText");
 const featuredAuthor = document.getElementById("featuredAuthor");
@@ -10,55 +14,78 @@ const favBtn         = document.getElementById("favBtn");
 const favGrid        = document.getElementById("favGrid");
 const favEmpty       = document.getElementById("favEmpty");
 const exploreBtn     = document.getElementById("exploreBtn");
+const searchInput    = document.getElementById("searchInput");
+const sortSelect     = document.getElementById("sortSelect");
+const themeToggle    = document.getElementById("themeToggle");
 
-let allQuotes = [];
+let allQuotes    = [];
 let currentQuote = null;
-let favorites = JSON.parse(localStorage.getItem("soulspark_favs") || "[]");
+let favorites    = JSON.parse(localStorage.getItem("soulspark_favs") || "[]");
 
+// ============================================================
+// COMMIT 3: Dark / Light Mode Toggle
+// ============================================================
+const savedTheme = localStorage.getItem("soulspark_theme");
+if (savedTheme === "light") {
+  document.body.classList.add("light-mode");
+  themeToggle.textContent = "☀️";
+}
 
-// ✅ update save button
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+  const isLight = document.body.classList.contains("light-mode");
+  themeToggle.textContent = isLight ? "☀️" : "🌙";
+  localStorage.setItem("soulspark_theme", isLight ? "light" : "dark");
+});
+
+// ============================================================
+// Update Save Button State
+// ============================================================
 function updateFavButton() {
   if (!currentQuote) return;
-
   const isFaved = favorites.some(f => f.quote === currentQuote.quote);
-
   favBtn.textContent = isFaved ? "♥ Saved" : "♡ Save";
   favBtn.classList.toggle("saved", isFaved);
 }
 
-
-// ✅ show random quote
+// ============================================================
+// Show Random Quote
+// ============================================================
 function showRandom() {
   if (allQuotes.length === 0) return;
-
-  const index = Math.floor(Math.random() * allQuotes.length);
-  currentQuote = allQuotes[index];
-
+  const index    = Math.floor(Math.random() * allQuotes.length);
+  currentQuote   = allQuotes[index];
   featuredText.style.opacity = "0";
-
   setTimeout(() => {
-    featuredText.textContent = `"${currentQuote.quote}"`;
+    featuredText.textContent  = `"${currentQuote.quote}"`;
     featuredAuthor.textContent = `— ${currentQuote.author}`;
-    featuredText.style.opacity = "1";
+    featuredText.style.opacity    = "1";
     featuredText.style.transition = "opacity 0.5s";
-
     updateFavButton();
   }, 200);
 }
 
-
-// ✅ render favorites
-function renderFavs() {
+// ============================================================
+// Render Favorites
+// ============================================================
+function renderFavs(filtered = null) {
+  const toRender = filtered !== null ? filtered : favorites;
   favGrid.innerHTML = "";
 
+  // Nothing saved at all
   if (favorites.length === 0) {
-    favEmpty.style.display = "block";   // ✅ FORCE SHOW
+    favEmpty.style.display = "block";
+    return;
+  }
+  favEmpty.style.display = "none";
+
+  // Saved items exist but search/sort returns nothing
+  if (toRender.length === 0) {
+    favGrid.innerHTML = `<p class="no-results">No sparks match your search ✦</p>`;
     return;
   }
 
-  favEmpty.style.display = "none";      // ✅ FORCE HIDE
-
-  favorites.forEach((q, i) => {
+  toRender.forEach((q, i) => {
     const card = document.createElement("div");
     card.className = "fav-card";
     card.style.animationDelay = i * 0.05 + "s";
@@ -74,11 +101,11 @@ function renderFavs() {
     const removeBtn = document.createElement("button");
     removeBtn.className = "fav-remove";
     removeBtn.textContent = "✕";
-
     removeBtn.addEventListener("click", () => {
+      // ✅ HOF: .filter() to remove from favorites
       favorites = favorites.filter(f => f.quote !== q.quote);
       localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
-      renderFavs();
+      applyControls();
       updateFavButton();
     });
 
@@ -89,22 +116,42 @@ function renderFavs() {
   });
 }
 
+// ============================================================
+// COMMIT 1 & 2: Search (.filter) + Sort (.sort)
+// ============================================================
+function applyControls() {
+  const keyword = searchInput.value.toLowerCase().trim();
+  const sortVal = sortSelect.value;
 
-// ✅ fetch quotes
+  // ✅ HOF: .filter() — search by quote text or author name
+  let result = favorites.filter(q =>
+    q.quote.toLowerCase().includes(keyword) ||
+    q.author.toLowerCase().includes(keyword)
+  );
+
+  // ✅ HOF: .sort() — sort by quote text or author
+  if (sortVal === "az") {
+    result = result.sort((a, b) => a.quote.localeCompare(b.quote));
+  } else if (sortVal === "za") {
+    result = result.sort((a, b) => b.quote.localeCompare(a.quote));
+  } else if (sortVal === "author") {
+    result = result.sort((a, b) => a.author.localeCompare(b.author));
+  }
+
+  renderFavs(result);
+}
+
+// ============================================================
+// Fetch Quotes from API
+// ============================================================
 async function fetchQuotes() {
   try {
     const response = await fetch(API_URL);
-
-    // ✅ IMPORTANT FIX
-    const data = await response.json();
-
-    allQuotes = data.quotes;
-
+    const data     = await response.json();
+    allQuotes      = data.quotes;
     loadingOverlay.classList.add("hidden");
-
     showRandom();
-    renderFavs();
-
+    applyControls();
   } catch (err) {
     console.log("error:", err);
     loadingOverlay.innerHTML =
@@ -112,29 +159,39 @@ async function fetchQuotes() {
   }
 }
 
+// ============================================================
+// Event Listeners
+// ============================================================
 
-// ✅ events
+// New random quote
 newQuoteBtn.addEventListener("click", showRandom);
 
+// Save / unsave current quote
 favBtn.addEventListener("click", () => {
   if (!currentQuote) return;
-
   if (favorites.some(f => f.quote === currentQuote.quote)) {
+    // ✅ HOF: .filter() to remove
     favorites = favorites.filter(f => f.quote !== currentQuote.quote);
   } else {
     favorites.push(currentQuote);
   }
-
   localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
-
   updateFavButton();
-  renderFavs();
+  applyControls();
 });
 
+// Scroll to explore
 exploreBtn.addEventListener("click", () => {
   document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
 });
 
+// COMMIT 1: Search input
+searchInput.addEventListener("input", applyControls);
 
-// ✅ init
+// COMMIT 2: Sort dropdown
+sortSelect.addEventListener("change", applyControls);
+
+// ============================================================
+// Init
+// ============================================================
 fetchQuotes();
