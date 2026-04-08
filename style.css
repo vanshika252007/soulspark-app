@@ -472,6 +472,222 @@ body.light-mode .fav-select {
   color: #1a1625;
 }
 
+/* Load Cormorant Garamond for elegant quote text */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&display=swap');
+ 
+/* --- Fix Quote Typography --- */
+.featured-text {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem) !important;
+  line-height: 1.75 !important;
+  letter-spacing: 0.01em !important;
+  color: #e8e0f0 !important;
+  text-transform: none !important;
+}
+ 
+.featured-author {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 300 !important;
+  font-style: normal !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #c9a0dc !important;
+}
+ 
+.fav-card-text {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-size: 0.95rem !important;
+  line-height: 1.65 !important;
+  text-transform: none !important;
+  color: #e8e0f0 !important;
+}
+ 
+.fav-card-author {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #9a8fb0 !important;
+}
+ 
+/* ============================================================
+   Theme Toggle — pill shaped, properly in nav
+   ============================================================ */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(201, 160, 220, 0.2) !important;
+  border-radius: 999px !important;
+  width: auto !important;
+  height: 34px !important;
+  padding: 0 14px !important;
+  cursor: pointer !important;
+  font-size: 0.78rem !important;
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: 0.08em !important;
+  color: #c9a0dc !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: background 0.25s, border-color 0.25s !important;
+  white-space: nowrap !important;
+  margin-left: 1.5rem !important;
+  flex-shrink: 0 !important;
+}
+ 
+.theme-toggle:hover {
+  background: rgba(201, 160, 220, 0.1) !important;
+  border-color: rgba(201, 160, 220, 0.45) !important;
+}
+ 
+/* ============================================================
+   ALT DARK THEME — "Moonrise" deep navy
+   Toggled via body.alt-theme (replaces light mode)
+   ============================================================ */
+body.alt-theme {
+  background: #060d1a !important;
+}
+ 
+body.alt-theme nav {
+  background: rgba(6, 13, 26, 0.88) !important;
+  border-bottom-color: rgba(90, 170, 255, 0.08) !important;
+}
+ 
+body.alt-theme .featured-card,
+body.alt-theme .fav-card {
+  background: rgba(12, 22, 42, 0.8) !important;
+  border-color: rgba(90, 170, 255, 0.1) !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5) !important;
+}
+ 
+body.alt-theme .featured-text,
+body.alt-theme .fav-card-text {
+  color: #d8e8fc !important;
+}
+ 
+body.alt-theme .featured-author {
+  color: #6aaeee !important;
+}
+ 
+body.alt-theme .fav-card-author {
+  color: #4a7aaa !important;
+}
+ 
+body.alt-theme .quote-icon {
+  color: rgba(90, 170, 255, 0.25) !important;
+}
+ 
+body.alt-theme .section-label {
+  color: #6aaeee !important;
+}
+ 
+body.alt-theme .btn-outline {
+  border-color: rgba(90, 170, 255, 0.3) !important;
+  color: #6aaeee !important;
+}
+ 
+body.alt-theme .btn-fav,
+body.alt-theme .btn-fav.saved {
+  background: linear-gradient(135deg, #1a4a7a, #0d2a50) !important;
+  border-color: rgba(90, 170, 255, 0.25) !important;
+  color: #6aaeee !important;
+}
+ 
+body.alt-theme .search-input,
+body.alt-theme .fav-select {
+  background: rgba(90, 170, 255, 0.04) !important;
+  border-color: rgba(90, 170, 255, 0.15) !important;
+  color: #d8e8fc !important;
+}
+ 
+body.alt-theme .search-input::placeholder { color: #385570 !important; }
+ 
+body.alt-theme .theme-toggle {
+  border-color: rgba(90, 170, 255, 0.18) !important;
+  color: #6aaeee !important;
+}
+ 
+body.alt-theme .theme-toggle:hover {
+  background: rgba(90, 170, 255, 0.07) !important;
+  border-color: rgba(90, 170, 255, 0.38) !important;
+}
+ 
+body.alt-theme .fav-remove { color: #2a4a6a !important; }
+body.alt-theme .fav-remove:hover { color: #6aaeee !important; }
+ 
+body.alt-theme nav h2,
+body.alt-theme nav ul a { color: #d8e8fc !important; }
+ 
+body.alt-theme .hero-tagline,
+body.alt-theme .hero-sub { color: #3d6080 !important; }
+ 
+body.alt-theme .footer-brand { color: #6aaeee !important; }
+body.alt-theme .footer-sub { color: #2a4a6a !important; }
+ 
+/* ============================================================
+   Favorites Controls (Search + Sort)
+   ============================================================ */
+.fav-controls {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1.5rem auto 2rem;
+  max-width: 700px;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+ 
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 160, 220, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e8e0f0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.25s, background 0.25s;
+}
+ 
+.search-input::placeholder { color: #6a5f7a; }
+.search-input:focus {
+  border-color: rgba(201, 160, 220, 0.5);
+  background: rgba(255, 255, 255, 0.07);
+}
+ 
+.fav-select {
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 160, 220, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e8e0f0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+ 
+.fav-select:hover,
+.fav-select:focus { border-color: rgba(201, 160, 220, 0.5); }
+ 
+.no-results {
+  text-align: center;
+  color: #6a5f7a;
+  font-style: italic;
+  font-size: 0.9rem;
+  padding: 2rem;
+  width: 100%;
+}
+ 
+
 /* --- No Results Message --- */
 .no-results {
   text-align: center;
