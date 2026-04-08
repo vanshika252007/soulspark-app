@@ -1,5 +1,5 @@
 // DummyJSON Quotes API - proper CORS, no key needed
-const API_URL = "https://dummyjson.com/quotes?limit=0";
+const API_URL = "https://dummyjson.com/quotes?limit=100";
 
 // elements
 const loadingOverlay = document.getElementById("loadingOverlay");
@@ -49,14 +49,17 @@ function searchQuotes(keyword) {
            q.author.toLowerCase().includes(keyword.toLowerCase());
   });
 
+  // 🔥 DEBUG (you will SEE it's working)
+  console.log("Search results:", results.length);
+
   if (results.length === 0) {
     featuredText.textContent = "No matching wisdom found...";
     featuredAuthor.textContent = "— ✦";
     return;
   }
 
-  const randomIndex = Math.floor(Math.random() * results.length);
-  currentQuote = results[randomIndex];
+  // 👉 SHOW FIRST RESULT (not random)
+  currentQuote = results[0];
 
   featuredText.textContent   = "\u201c" + currentQuote.quote + "\u201d";
   featuredAuthor.textContent = "\u2014 " + currentQuote.author;
@@ -170,15 +173,15 @@ favBtn.addEventListener("click", function() {
   renderFavs();
 });
 
-exploreBtn.addEventListener("click", function() {
-  document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
-});
+
 
 searchInput.addEventListener("input", function(e) {
   const value = e.target.value.trim();
 
+  console.log("Typing:", value); // 👈 DEBUG
+
   if (value === "") {
-    showRandom(); // fallback
+    showRandom();
   } else {
     searchQuotes(value);
   }
