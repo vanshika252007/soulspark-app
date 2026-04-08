@@ -12,6 +12,7 @@ const favEmpty       = document.getElementById("favEmpty");
 const exploreBtn     = document.getElementById("exploreBtn");
 const themeToggle    = document.getElementById("themeToggle");
 const themeIcon      = document.getElementById("themeIcon");
+const searchInput = document.getElementById("searchInput");
 
 // state
 let allQuotes    = [];
@@ -40,6 +41,30 @@ function isFaved(q) {
 
 function saveFavs() {
   localStorage.setItem("soulspark_favs", JSON.stringify(favorites));
+}
+
+function searchQuotes(keyword) {
+  const results = allQuotes.filter(function(q) {
+    return q.quote.toLowerCase().includes(keyword.toLowerCase()) ||
+           q.author.toLowerCase().includes(keyword.toLowerCase());
+  });
+
+  if (results.length === 0) {
+    featuredText.textContent = "No matching wisdom found...";
+    featuredAuthor.textContent = "— ✦";
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * results.length);
+  currentQuote = results[randomIndex];
+
+  featuredText.textContent   = "\u201c" + currentQuote.quote + "\u201d";
+  featuredAuthor.textContent = "\u2014 " + currentQuote.author;
+
+  favBtn.textContent = isFaved(currentQuote) ? "♥ Saved" : "♡ Save";
+  isFaved(currentQuote)
+    ? favBtn.classList.add("saved")
+    : favBtn.classList.remove("saved");
 }
 
 // ── featured quote ─────────────────────────────────────────
@@ -147,6 +172,16 @@ favBtn.addEventListener("click", function() {
 
 exploreBtn.addEventListener("click", function() {
   document.getElementById("explore").scrollIntoView({ behavior: "smooth" });
+});
+
+searchInput.addEventListener("input", function(e) {
+  const value = e.target.value.trim();
+
+  if (value === "") {
+    showRandom(); // fallback
+  } else {
+    searchQuotes(value);
+  }
 });
 
 // ── start ──────────────────────────────────────────────────
