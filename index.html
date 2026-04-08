@@ -1,92 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SoulSpark ✨</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
-<div class="stars"></div>
-<div class="stars2"></div>
 
-<nav>
-  <h2>✦ SoulSpark</h2>
-  <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#explore">Explore</a></li>
-    <li><a href="#favorites">Favorites</a></li>
-  </ul>
-  <!-- COMMIT 3: Dark/Light Mode Toggle -->
-  <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
-</nav>
+  <div class="stars"></div>
+  <div class="stars2"></div>
 
-<section class="hero">
-  <div class="moon"></div>
-  <div class="petals">
-    <span class="petal p1">🌸</span>
-    <span class="petal p2">🌸</span>
-    <span class="petal p3">🌸</span>
-    <span class="petal p4">🌸</span>
-    <span class="petal p5">🌸</span>
-  </div>
-  <div class="hero-content">
-    <p class="hero-tagline">DRINK IN THE WISDOM OF</p>
-    <h1 class="hero-title">Your Soul's Daily Spark</h1>
-    <p class="hero-sub">Curated wisdom to illuminate your path, one quote at a time.</p>
-    <button class="btn-primary" id="exploreBtn">EXPLORE QUOTES ↓</button>
-  </div>
-</section>
+  <nav class="navbar">
+    <div class="nav-logo">✦ SoulSpark</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#explore">Explore</a></li>
+      <li><a href="#favorites">Favorites</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <span id="themeIcon">☽</span>
+    </button>
+  </nav>
 
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-orb"></div>
-  <p class="loading-text">Summoning your daily spark… ✨</p>
-</div>
-
-<section class="featured-section" id="explore">
-  <div class="section-label">✦ TODAY'S SPARK</div>
-  <div class="featured-card">
-    <div class="quote-icon">"</div>
-    <p class="featured-text" id="featuredText">Loading...</p>
-    <p class="featured-author" id="featuredAuthor">— ✦</p>
-    <div class="card-actions">
-      <button class="btn-outline" id="newQuoteBtn">NEW SPARK ✦</button>
-      <button class="btn-fav" id="favBtn">♡ SAVE</button>
+  <section class="hero">
+    <div class="moon"></div>
+    <div class="petals">
+      <span class="petal p1">🌸</span>
+      <span class="petal p2">🌸</span>
+      <span class="petal p3">🌸</span>
+      <span class="petal p4">🌸</span>
+      <span class="petal p5">🌸</span>
     </div>
-  </div>
-</section>
+    <div class="hero-content">
+      <p class="hero-tagline">Drink in the Wisdom of</p>
+      <h1 class="hero-title">Your Soul's Daily Spark</h1>
+      <p class="hero-sub">Curated wisdom to illuminate your path, one quote at a time.</p>
+      <button class="btn-primary" id="exploreBtn">Explore Quotes ↓</button>
+    </div>
+  </section>
 
-<section class="fav-section" id="favorites">
-  <div class="section-label">✦ YOUR SAVED SPARKS</div>
-
-  <!-- COMMIT 1 & 2: Search + Sort Controls -->
-  <div class="fav-controls" id="favControls">
-    <input
-      type="text"
-      id="searchInput"
-      class="search-input"
-      placeholder="🔍 Search your saved sparks..."
-    />
-    <select id="sortSelect" class="fav-select">
-      <option value="default">Sort: Default</option>
-      <option value="az">Quote A → Z</option>
-      <option value="za">Quote Z → A</option>
-      <option value="author">By Author</option>
-    </select>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-orb"></div>
+    <p class="loading-text">Gathering cosmic wisdom…</p>
   </div>
 
-  <div class="fav-empty" id="favEmpty">
-    <p>Your cosmic collection is empty. Save quotes you love! ♡</p>
-  </div>
-  <div class="fav-grid" id="favGrid"></div>
-</section>
+  <section class="featured-section" id="explore">
+    <p class="section-label">✦ Today's Spark</p>
+    <div class="featured-card">
+      <div class="quote-icon">"</div>
+      <p class="featured-text" id="featuredText">Loading your daily wisdom...</p>
+      <p class="featured-author" id="featuredAuthor">— ✦</p>
+      <div class="card-actions">
+        <button class="btn-outline" id="newQuoteBtn">New Spark ✦</button>
+        <button class="btn-fav" id="favBtn">♡ Save</button>
+      </div>
+    </div>
+  </section>
 
-<footer class="footer">
-  <p class="footer-brand">✦ SoulSpark</p>
-  <p class="footer-sub">Powered by Quotes API · Built with ♡</p>
-</footer>
+  <section class="fav-section" id="favorites">
+    <p class="section-label">✦ Your Saved Sparks</p>
+    <p class="fav-empty" id="favEmpty">Your cosmic collection is empty. Save quotes you love! ♡</p>
+    <div class="fav-grid" id="favGrid"></div>
+  </section>
 
-<script src="script.js"></script>
+  <footer class="footer">
+    <p class="footer-brand">✦ SoulSpark</p>
+    <p class="footer-sub">Powered by DummyJSON Quotes API · Built with ♡</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
