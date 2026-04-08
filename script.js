@@ -23,19 +23,19 @@ let currentQuote = null;
 let favorites    = JSON.parse(localStorage.getItem("soulspark_favs") || "[]");
 
 // ============================================================
-// COMMIT 3: Dark / Light Mode Toggle
+// COMMIT 3: Theme Toggle — Default Dark ↔ Moonrise Navy Dark
 // ============================================================
 const savedTheme = localStorage.getItem("soulspark_theme");
-if (savedTheme === "light") {
-  document.body.classList.add("light-mode");
-  themeToggle.textContent = "☀️";
+if (savedTheme === "alt") {
+  document.body.classList.add("alt-theme");
+  themeToggle.textContent = "✦ PURPLE";
 }
 
 themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
-  const isLight = document.body.classList.contains("light-mode");
-  themeToggle.textContent = isLight ? "☀️" : "🌙";
-  localStorage.setItem("soulspark_theme", isLight ? "light" : "dark");
+  document.body.classList.toggle("alt-theme");
+  const isAlt = document.body.classList.contains("alt-theme");
+  themeToggle.textContent = isAlt ? "✦ PURPLE" : "✦ NAVY";
+  localStorage.setItem("soulspark_theme", isAlt ? "alt" : "default");
 });
 
 // ============================================================
