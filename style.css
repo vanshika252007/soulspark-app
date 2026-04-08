@@ -462,6 +462,37 @@ body {
 }
 .fav-remove:hover { transform: scale(1.2); }
 
+
+/* ===== SEARCH ===== */
+.search-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.search-box input {
+  width: min(420px, 90%);
+  padding: 0.8rem 1.2rem;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-box input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 8px rgba(201,169,110,0.3);
+}
+
 /* ===== FOOTER ===== */
 .footer {
   position: relative;
